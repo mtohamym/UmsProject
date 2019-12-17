@@ -10,16 +10,20 @@ import java.util.Scanner;
 public class Ui {
 
     public Scanner in = new Scanner(System.in);
+    ArrayList<Person> p = new ArrayList<>();
     ArrayList<Student> csStudents = new ArrayList<>();
     ArrayList<Course> csCourse = new ArrayList<>();
     ArrayList<Doctor> csDoctors = new ArrayList<>();
     ArrayList<StudentResults> csStudentResults = new ArrayList<>();
 
+    //tohamy
     public void mainMenu() throws IOException {
         getDataStudent();
         getDataCourse();
         getDataDcotors();
         getResultsData();
+        getStudentCourses();
+        
         System.out.println("\tUNIVERSTY MANAGEMENT SYsTEM");
         int choice, status = 1;
         while (status == 1) {
@@ -67,6 +71,7 @@ public class Ui {
 
     }
 
+    //shorok
     public void studentSection() {
 
         int choice, Select = 1;
@@ -93,8 +98,8 @@ public class Ui {
 
                     case 2: {
                         //Student list
-                        String FileHeader = "name\tid\tStudentSSN\tStudentAddres\tStudentBDate,";
-                        System.out.println(FileHeader);
+
+                        System.out.println("name\tid\tStudentSSN\tStudentAddres\tStudentBDate,");
                         for (int i = 0; i < csStudents.size(); i++) {
                             csStudents.get(i).showInfo();
                         }
@@ -103,7 +108,7 @@ public class Ui {
 
                     case 3: {
                         //Register course
-                        System.out.println("enter srudent id");
+                        System.out.println("enter student id");
                         int id = in.nextInt();
                         int i = searchStudent(id);
 
@@ -112,7 +117,7 @@ public class Ui {
                         } else {
                             System.out.println("not found Student ! .. Try again!");
                         }
-
+                        storeStudentsCourses();
                         //can put try and catch here .
                         break;
                     }
@@ -128,7 +133,7 @@ public class Ui {
 
                 }
             } catch (IOException e) {
-                System.out.println("e");
+                System.err.println("file opened .. close it");
             }
             try {
                 System.out.println("1-student section\n2-Main menu ");
@@ -141,6 +146,7 @@ public class Ui {
         }
     }
 
+    //alaa
     public void courseSection() {
         try {
 
@@ -149,79 +155,67 @@ public class Ui {
             System.out.println("\t\t\t\t\t**COURSE SECTION**");
             System.out.println("--------------------------------------------------------------------------------");
             while (Select == 1) {
-
                 System.out.println("1.Add Course\n2.Course list\n3.Search cource\n4.delete cource");
-
                 choice = in.nextInt();
-
                 switch (choice) {
-
                     case 1: {
                         //Add Course
                         csCourse.add(new Course());
                         csCourse.get(csCourse.size() - 1).addCourse();
                         storeDataCourse();
                         break;
-
                     }
-
                     case 2: {
-                        // Course list
+                        System.out.println("name" + "|\t" + "code" + "|\t" + "credit_hour" + "|\t" + "max_grade" + "|\t" + "type");
+                        System.out.println("------------------------------------------------------------");
                         for (int i = 0; i < csCourse.size(); i++) {
                             csCourse.get(i).showInfo();
                         }
                         break;
                     }
-
                     case 3: {
                         //search cource
                         int i = searchCource();
-                        csCourse.get(i).showInfo();
+                        if (i != -1) {
+                            csCourse.get(i).showInfo();
+                        }
                         break;
                     }
                     case 4: {
                         //delete cource
                         int i = searchCource();
-                        csCourse.remove(i);
-                        storeDataCourse();
+                        if (i != -1) {
+                            csCourse.remove(i);
+                            storeDataCourse();
+                        }
                         break;
                     }
-
                 }
                 System.out.println("1-Course section\n2-Main menu ");
-
                 Select = in.nextInt();
-
             }
         } catch (Exception e) {
             System.out.println("input error");
         }
     }
-//toto
+
+    //omnia
     public void doctorSection() {
         try {
-            int text ;
             int choice, Select = 1;
-
             System.out.println("\t\t\t\t\t**Doctor SECTION**");
-            System.out.println("--------------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------");
             while (Select == 1) {
-
                 System.out.println("1.Add Doctor\n2.Doctor list");
-
                 choice = in.nextInt();
-
                 switch (choice) {
-
                     case 1: {
                         //Add Doctor
                         csDoctors.add(new Doctor());
                         csDoctors.get(csDoctors.size() - 1).addDoctor();
                         storeDataDcotors();
                         break;
-
                     }
-
                     case 2: {
                         // Doctor list
                         for (int i = 0; i < csDoctors.size(); i++) {
@@ -229,18 +223,16 @@ public class Ui {
                         }
                         break;
                     }
-
                 }
                 System.out.println("1-Doctor section\n2-Main menu ");
-
                 Select = in.nextInt();
-
             }
         } catch (Exception e) {
             System.out.println("input error");
         }
     }
 
+    //tohamy
     public void resultsSection() throws IOException {
 
         int choice, Select = 1;
@@ -277,10 +269,8 @@ public class Ui {
                     int id = in.nextInt();
                     int studentPosition = searchStudent(id);
                     int gradePosition = searchResult(id);
-                    if (studentPosition != -1) {
+                    if (studentPosition != -1 && gradePosition != -1) {
                         csStudentResults.get(gradePosition).showResult(studentPosition, csStudents);
-                    } else {
-                        System.out.println("not found student");
                     }
 
                     break;
@@ -293,27 +283,21 @@ public class Ui {
         }
     }
 
+    //manar
     public int searchStudent(int id) {
-
         int i;
         boolean flag = false;
-
         for (i = 0; i < csStudents.size(); i++) {
             if (id == csStudents.get(i).getId()) {
                 flag = true;
-                System.out.println("found");
+           //     System.out.println("Student found");
                 break;
             }
         }
-
-        //if  
-        if (flag == true) {
-            return i;
-        } else {
-            return -1;
-        }
+        return (flag == true) ? i : -1;
     }
 
+    //alaa
     public int searchCource() {
         int id;
         int i;
@@ -337,6 +321,7 @@ public class Ui {
         }
     }
 
+    //tohamy
     public int searchResult(int id) {
 
         int i;
@@ -358,10 +343,11 @@ public class Ui {
         }
     }
 
+    //manar
     public void storeDataStudent() throws IOException {
         String Comma = ",";
         String newLine = "\n";
-        String FileHeader = "name\t,id\t,StudentSSN\t,StudentAddres\t,StudentBDate,";
+        String FileHeader = "name\t,id\t,StudentSSN\t,StudentAddress\t,StudentBDate,";
         try (FileWriter student = new FileWriter("D:\\StudentData.Csv")) {
             student.append(FileHeader);
             for (int i = 0; i < csStudents.size(); i++) {
@@ -384,6 +370,7 @@ public class Ui {
 
     }
 
+    //shorok
     public void getDataStudent() throws IOException {
         String File = "D:\\StudentData.Csv";
         try {
@@ -391,7 +378,7 @@ public class Ui {
             String Line = "";
             reader.readLine();
             while ((Line = reader.readLine()) != null) {
-                //mohammed,2020,10th,2212,20-4-2000
+
                 String[] text = Line.split(",");
                 if (text.length > 3) {
                     Student s = new Student();
@@ -410,6 +397,7 @@ public class Ui {
 
     }
 
+    //shorok
     public void storeDataCourse() throws IOException {
         String Comma = ",";
         String newLine = "\n";
@@ -436,6 +424,7 @@ public class Ui {
 
     }
 
+    //shorok
     public void getDataCourse() throws IOException {
         String File = "D:\\CourseData.Csv";
         try {
@@ -443,24 +432,28 @@ public class Ui {
             String Line = "";
             reader.readLine();
             while ((Line = reader.readLine()) != null) {
+
                 String[] text = Line.split(",");
                 if (text.length > 3) {
-                    Course c = new Course();
-                    c.setName(text[0]);
-                    c.setCode(Integer.parseInt(text[1]));
-                    c.count = c.getCode() + 1;
-                    c.setCredit_hour(Integer.parseInt(text[2]));
-                    c.setMax_grade(Integer.parseInt(text[3]));
-                    c.setType(text[4]);
-                    csCourse.add(c);
+                    Course Course = new Course();
+                    Course.setName(text[0]);
+                    Course.setCode(Integer.parseInt(text[1]));
+                    Course.count = Course.getCode() + 1;
+                    int chour = Integer.parseInt(text[2]);
+                    Course.setCredit_hour(chour);
+                    int maxGrade = Integer.parseInt(text[3]);
+                    Course.setMax_grade(maxGrade);
+                    Course.setType(text[4]);
+                    csCourse.add(Course);
                 }
             }
         } catch (IOException e) {
-            System.out.println("Course file Not found!!");
+            System.out.println("Not found file!!");
         }
 
     }
 
+    //tohamy
     public void storeDataResults() throws IOException {
         String Comma = ",";
         String newLine = "\n";
@@ -499,6 +492,7 @@ public class Ui {
 
     }
 
+    //tohamy
     public void getResultsData() throws IOException {
         String File = "D:\\StudentResults.Csv";
         try {
@@ -536,6 +530,7 @@ public class Ui {
 
     }
 
+    //shorok
     public void storeDataDcotors() throws IOException {
         String Comma = ",";
         String newLine = "\n";
@@ -547,7 +542,6 @@ public class Ui {
                 Dcotor.append(String.valueOf(csDoctors.get(i).getId()));
                 Dcotor.append(Comma);
                 Dcotor.append(csDoctors.get(i).getName());
-
                 Dcotor.append(Comma);
                 Dcotor.append(csDoctors.get(i).getDoctorSpecialization());
                 Dcotor.append(Comma);
@@ -561,6 +555,7 @@ public class Ui {
 
     }
 
+    //shorok
     public void getDataDcotors() throws IOException {
         String File = "D:\\DoctorData.Csv";
         try {
@@ -583,5 +578,58 @@ public class Ui {
             System.out.println("Not found file!!");
         }
 
+    }
+
+    //shorok
+    public void storeStudentsCourses() throws IOException {
+        String Comma = ",";
+        String newLine = "\n";
+        String FileHeader = "id\t,credit hours\t,Course Name,";
+        try (FileWriter courses = new FileWriter("D:\\StudentCourses.Csv")) {
+            courses.append(FileHeader);
+            for (int i = 0; i < csStudents.size(); i++) {
+                if (!csStudents.get(i).getStudentcourse().isEmpty()) {
+                    courses.append(newLine);
+                    courses.append(String.valueOf(csStudents.get(i).getId()));
+                    courses.append(Comma);
+                    courses.append(String.valueOf(csStudents.get(i).getStudentCreditHours()));
+                    courses.append(Comma);
+                    for (int j = 0; j < csStudents.get(i).getStudentcourse().size(); j++) {
+                        courses.append(csStudents.get(i).getStudentcourse().get(j));
+                        courses.append(Comma);
+                    }
+                    courses.append(newLine);
+                }
+            }
+            courses.flush();
+        }
+
+    }
+
+    //tohamy
+    public void getStudentCourses() throws IOException {
+        String File = "D:\\StudentCourses.Csv";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(File));
+            String Line = "";
+            reader.readLine();
+            while ((Line = reader.readLine()) != null) {
+                String[] text = Line.split(",");
+                int i = searchStudent(Integer.parseInt(text[0]));
+               
+                    csStudents.get(i).setStudentCreditHours(Integer.parseInt(text[1]));
+                    ArrayList<String> tempCourses = new ArrayList<>();
+                    for (int j = 2; j < text.length; j++) {
+                        tempCourses.add(text[j]);
+                        csStudents.get(i).setStudentcourse(tempCourses);
+                      
+                   
+                    System.out.println(csStudents.get(i).getStudentcourse().toString());
+                    
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("StudentCourses file Not found!!");
+        }
     }
 }

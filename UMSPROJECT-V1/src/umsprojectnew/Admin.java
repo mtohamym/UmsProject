@@ -6,7 +6,6 @@ public class Admin {
 
     private String Adminuser;
     private String Adminpassword;
-
     public Scanner in = new Scanner(System.in);
 
     public Admin() {
@@ -30,10 +29,7 @@ public class Admin {
         }
     }
 
-    public void storeData() {
-    }
-     public void getData() {
-    }
+ 
 
     public void setUser(String user) {
         this.Adminuser = user;

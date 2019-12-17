@@ -11,21 +11,8 @@ public class Course {
     private String type;
     public Scanner in = new Scanner(System.in);
 
-    public void editCourse() {
+  
 
-    }
-
-    public String searchCourse(int code) {
-        return null;
-    }
-
-    public void storeData() {
-
-    }
-
-    public void getData() {
-
-    }
 
     public void addCourse() {
         count++;
@@ -47,7 +34,7 @@ public class Course {
     }
 
     public void showInfo() {
-        System.out.println(name + "\t" + code + "\t" + credit_hour + "\t" + max_grade + "\t" + type);
+        System.out.println(name + "\t" + code + "\t  " + credit_hour + "\t\t  " + max_grade + "\t\t" + type);
     }
 
     public int getCode() {
@@ -72,7 +59,7 @@ public class Course {
         return credit_hour;
     }
 
-    public void setCredit_hour(int credit) {
+    public void setCredit_hour(int credit_hour) {
         this.credit_hour = credit_hour;
     }
 
@@ -80,9 +67,11 @@ public class Course {
         return max_grade;
     }
 
-    public void setMax_grade(int max) {
+    public void setMax_grade(int max_grade) {
         this.max_grade = max_grade;
     }
+
+   
 
     public String getType() {
         return type;

@@ -32,7 +32,7 @@ public class Student extends Person {
         in.nextLine();
         StudentSSN = in.nextLine();
         
-        System.out.println("enter Student addres : ");
+        System.out.println("enter Student address : ");
         in.nextLine();
         StudentAddres = in.nextLine();
         
@@ -55,7 +55,7 @@ public class Student extends Person {
             if (code == course.get(i).getCode()) {
                 Studentcourse.add(course.get(i).getName());
                 StudentCreditHours += course.get(i).getCredit_hour();
-                System.out.println(course.get(i).getName() + " course added");
+                System.out.println(course.get(i).getName() + "  course added");
                 break;
             }
             

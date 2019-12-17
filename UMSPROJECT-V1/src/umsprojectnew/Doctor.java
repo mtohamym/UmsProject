@@ -33,9 +33,7 @@ public class Doctor extends Person {
         System.out.println(id + "\t" + name + "\t" + DoctorSpecialization
                 + "\t" + DoctorRoom);
     }
-
-  
-
+    
     public String getDoctorSpecialization() {
         return DoctorSpecialization;
     }
