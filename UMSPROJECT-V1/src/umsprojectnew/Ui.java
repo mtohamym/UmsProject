@@ -22,7 +22,7 @@ public class Ui {
         getDataCourse();
         getDataDcotors();
         getResultsData();
-        getStudentCourses();
+       // getStudentCourses();
         
         System.out.println("\tUNIVERSTY MANAGEMENT SYsTEM");
         int choice, status = 1;
